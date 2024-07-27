@@ -6,7 +6,7 @@ class Clothes_model extends CI_Model {
 
     public function get_clothes($cuaca=NULL,$acara=NULL) {
         // Select fields from baju, cuaca, and acara tables
-        $this->db->select('baju.*, cuaca.cuaca_name, acara.acara_name'); 
+        $this->db->select('baju.*, cuaca.cuaca_name, acara.acara_name,cuaca.id as cid,acara.id as aid'); 
         $this->db->from('baju');
         $this->db->join('cuaca', 'cuaca.id = baju.cuaca_id');
         $this->db->join('acara', 'acara.id = baju.acara_id');
@@ -71,6 +71,15 @@ class Clothes_model extends CI_Model {
         $this->db->where('recommendation', $data);
         $query = $this->db->get();
         return $query->result();
+        
+    }
+    public function getFavorit($baju_id) {
+        // Select fields from baju, cuaca, and acara tables
+        $this->db->select('COUNT(*) as count');
+        $this->db->from('history_search');
+        $this->db->where('baju_id', $baju_id);
+        $query = $this->db->get();
+        return $query->row()->count;
         
     }
 }

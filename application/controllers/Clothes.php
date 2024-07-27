@@ -13,15 +13,33 @@ class Clothes extends CI_Controller {
             $data['clothes'] = $this->Clothes_model->get_clothes($cuaca_id,$acara_id);
             $data['cuaca'] = $this->Clothes_model->get_cuaca();
             $data['acara'] = $this->Clothes_model->get_acara();
+            $data['acara_id'] = $acara_id;
+            $data['cuaca_id'] = $cuaca_id;
         }else{
             $data['clothes'] = $this->Clothes_model->get_clothes();
             $data['cuaca'] = $this->Clothes_model->get_cuaca();
             $data['acara'] = $this->Clothes_model->get_acara();
             $data['title'] = 'Clothes Archive';
+            $data['acara_id'] = '';
+            $data['cuaca_id'] = '';
         }
         $this->load->view('template/header', $data);
         $this->load->view('clothes/index', $data);
         $this->load->view('template/footer');
+    }
+    public function pilihbaju($cuaca,$acara,$baju)
+    {
+        $data = [
+                'cuaca_id' => $cuaca,
+                'acara_id' => $acara,
+                'baju_id' => $baju
+            ];
+        $cek = $this->db->insert('history_search', $data);
+        if ($cek) {
+            $this->session->set_flashdata('notif', 'Berhasil Memilih Baju', 300);
+            redirect('clothes');
+        }
+
     }
     public function fetch_data() {
         // URL endpoint API Prolog

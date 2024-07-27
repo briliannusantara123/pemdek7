@@ -29,14 +29,28 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   
   	<div class="w3-row-padding w3-padding-16 w3-center" id="food">
   		<?php foreach ($clothes as $c): ?>
+  		 <?php $favorit = $this->Clothes_model->getFavorit($c->id) ?>
 	    <div class="w3-quarter">
-	    <?php if ($c->gambar): ?>
-	    	<img src="<?= base_url('gambar/'.$c->gambar) ?>" alt="Sandwich" style="width:100%;border-radius: 20px;">
-	    <?php else: ?>
-	    	<img src="<?= base_url('gambar/ni.png') ?>" alt="Sandwich" style="width:100%;border-radius: 20px;">
-	    <?php endif ?>
+		    <?php if ($cuaca_id): ?>
+		    	<?php if ($c->gambar): ?>
+			    	<a href="<?= base_url() ?>index.php/Clothes/pilihbaju/<?= $cuaca_id ?>/<?= $acara_id ?>/<?= $c->id ?>"><img src="<?= base_url('gambar/'.$c->gambar) ?>" alt="Sandwich" style="width:100%;border-radius: 20px;"></a>
+			    <?php else: ?>
+			    	<a href="<?= base_url() ?>index.php/Clothes/pilihbaju/<?= $cuaca_id ?>/<?= $acara_id ?>/<?= $c->id ?>"><img src="<?= base_url('gambar/ni.png') ?>" alt="Sandwich" style="width:100%;border-radius: 20px;"></a>
+			    <?php endif ?>
+		    <?php else: ?>
+			    	<?php if ($c->gambar): ?>
+				    	<a href="<?= base_url() ?>index.php/Clothes/pilihbaju/<?= $c->cid ?>/<?= $c->aid ?>/<?= $c->id ?>"><img src="<?= base_url('gambar/'.$c->gambar) ?>" alt="Sandwich" style="width:100%;border-radius: 20px;"></a>
+				    <?php else: ?>
+				    	<a href="<?= base_url() ?>index.php/Clothes/pilihbaju/<?= $c->cid ?>/<?= $c->aid ?>/<?= $c->id ?>"><img src="<?= base_url('gambar/ni.png') ?>" alt="Sandwich" style="width:100%;border-radius: 20px;"></a>
+				    <?php endif ?>
+		    <?php endif ?>
+	    
+	      <?php if ($favorit > 5): ?>
+	      	<h4><?= $c->recommendation ?> (Favorit)</h4>
+	      <?php else: ?>
+	      	<h4><?= $c->recommendation ?></h4>
+	      <?php endif ?>
 	      
-	      <h4><?= $c->recommendation ?></h4>
 	      <p>Stelan baju ini cocok di gunakan saat cuaca <?= $c->cuaca_name ?> dan untuk acara <?= $c->acara_name ?></p>
 	    </div>
 	    <?php endforeach ?>
