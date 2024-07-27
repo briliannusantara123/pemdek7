@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Data</title>
+    <script>
+        async function sendData() {
+            const name = document.getElementById('name').value;
+            const value = document.getElementById('value').value;
+            
+            const response = await fetch('http://localhost:8080/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: name, value: value }),
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result);
+        }
+    </script>
+</head>
+<body>
+    <h1>Create Data</h1>
+    <form onsubmit="event.preventDefault(); sendData();">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br>
+        <label for="value">Value:</label>
+        <input type="text" id="value" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="result"></p>
+</body>
+</html>
